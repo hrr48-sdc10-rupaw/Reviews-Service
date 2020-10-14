@@ -25,7 +25,7 @@
   "scripts": {
     "build": "cd client && npm run build",
     "clearDB": "cd database && npm run unseed && npm run unmigrate && npm run unDB",
-    "installAll": "npm install && cd database && npm install && cd ../server && npm install",
+    "installAll": "npm install && cd database && npm install && cd ../server && npm install && cd ../client && npm install",
     "initialize": "cd database && npm run database && npm run migrate && npm run seed",
     "start": "nodemon server/index.js",
     "test": "cd tests && jest --detectOpenHandles"
