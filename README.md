@@ -52,6 +52,7 @@ From within the root directory:
 
 ### API Endpoints (CRUD Operations)
 
+```sh
 - CREATE - POST
 endpoint: /moist-air/reviews/
 query parameters: gameId
@@ -137,4 +138,5 @@ body:
     userId: "PLACE_USERID_HERE
   }
 response: Review was deleted
+```
 
