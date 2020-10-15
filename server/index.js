@@ -29,12 +29,15 @@ app.post('/moist-air/reviews', (req, res) => {
   console.log(reviewData);
   db.createReview(reviewData)
     .then((data) => {
-      console.log(data);
+      res.status(200).send('Review has been posted');
+    })
+    .catch((err) => {
+      res.send(err);
     })
 })
 
 app.get('/moist-air/reviews', (req, res, next) => {
-  let gameId = req.query.gameId;
+  let gameId = req.query.gameID;
   console.log(req.query);
   if (gameId === '') { // default to hello kitty
     gameId = 1;
@@ -58,6 +61,18 @@ app.patch('/moist-air/reviews', (req, res, next) => {
       res.send(err);
     });
 });
+
+app.delete('/moist-air/reviews', (req, res) => {
+  var gameId = req.query.gameID;
+  var userId = req.body.userId;
+  db.deleteReview(gameId, userId)
+    .then(() => {
+      res.send('Review was deleted');
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

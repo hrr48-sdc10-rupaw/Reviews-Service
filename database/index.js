@@ -70,6 +70,18 @@ var createReview = async (reviewData) => {
   return review;
 };
 
+var deleteReview = async (gameId, userId) => {
+  const review = await models.Review.findOne({
+    where: {
+      GameId: gameId,
+      UserId: userId
+    }
+  });
+  review.destroy();
+  return;
+}
+
 module.exports.getReviews = getReviews;
 module.exports.updateReview = updateReview;
 module.exports.createReview = createReview;
+module.exports.deleteReview = deleteReview;
