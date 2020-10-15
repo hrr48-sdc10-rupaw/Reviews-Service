@@ -53,7 +53,7 @@ var updateReview = async (id, dataToChange) => {
   return review;
 };
 
-var createReview = async (reviewData) => {
+var createReview = async (reviewData, callback) => {
   const review = await models.Review.create({
     GameId: reviewData.gameId,
     UserId: reviewData.userId,
