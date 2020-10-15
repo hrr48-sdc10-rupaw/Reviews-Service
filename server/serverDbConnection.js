@@ -56,8 +56,8 @@ const updateOperation = (query, callback) => {
     })
 }
 
-const deleteOperation = (query, body, callback) => {
-  db.deleteReview(query.gameID, body.userId)
+const deleteOperation = (gameId, userId, callback) => {
+  db.deleteReview(gameId, userId)
     .catch((err) => {
       callback(err)
     })

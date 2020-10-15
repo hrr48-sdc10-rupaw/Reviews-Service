@@ -1,5 +1,5 @@
 const express = require('express');
-const abstraction = require('./abstraction.js');
+const serverDbConnection = require('./serverDbConnection.js');
 
 const app = express();
 const PORT = process.env.PORT || 3003;
@@ -8,7 +8,7 @@ app.use('/', express.static('client/dist'));
 app.use(express.json());
 
 app.post('/moist-air/reviews', (req, res) => {
-  abstraction.createOperation(req.query, req.body, (err, result) => {
+  serverDbConnection.createOperation(req.query, req.body, (err, result) => {
     if (err) {
       console.error(err);
       res.send(err);
@@ -18,7 +18,7 @@ app.post('/moist-air/reviews', (req, res) => {
 });
 
 app.get('/moist-air/reviews', (req, res) => {
-  abstraction.readAllOperation(req.query.gameID, (err, result) => {
+  serverDbConnection.readAllOperation(req.query.gameID, (err, result) => {
     if (err) {
       console.error(err);
       res.send(err);
@@ -28,7 +28,7 @@ app.get('/moist-air/reviews', (req, res) => {
 })
 
 app.patch('/moist-air/reviews', (req, res) => {
-  abstraction.updateOperation(req.query, (err, result) => {
+  serverDbConnection.updateOperation(req.query, (err, result) => {
     if (err) {
       console.error(err);
       res.send(err);
@@ -39,7 +39,7 @@ app.patch('/moist-air/reviews', (req, res) => {
 
 app.delete('/moist-air/reviews', (req, res) => {
   console.log('receiving delete request');
-  abstraction.deleteOperation(req.query, req.body, (err, result) => {
+  serverDbConnection.deleteOperation(req.query.gameID, req.body.userId, (err, result) => {
     if (err) {
       console.error(err);
       res.send(err);
