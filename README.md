@@ -5,10 +5,9 @@
 
 ## Related Projects
 
-  - https://github.com/Jamie-Lee-Birdis/reviews-proxy
-  - https://github.com/Jamie-Lee-Birdis/hero-section
-  - https://github.com/Jamie-Lee-Birdis/body
-  - https://github.com/Jamie-Lee-Birdis/reviews/
+  - https://github.com/hrr48-sdc10-rupaw/Chance-Proxy
+  - https://github.com/hrr48-sdc10-rupaw/body
+  - https://github.com/hrr48-sdc10-rupaw/fec-hero
 
 ## Table of Contents
 
@@ -54,20 +53,26 @@ From within the root directory:
 
 ```sh
 - CREATE - POST
+
+Create new reviews using a gameId, userId, body, and recommended value. 
+
 endpoint: /moist-air/reviews/
 query parameters: gameId
 request:
   body: {
     userId: {PLACE_USERID_HERE} (integer)
     body: {PLACE_BODY_HERE} (text)
-    recommend: {PLACE_RECOMMEND_HERE} (boolean)
+    recommended: {PLACE_RECOMMENDED_HERE} (boolean)
     }
 response: 
   Success: 'Review has been posted'
-  Error: Error
+  Error: Error will be displayed here. 
 
     
 - READ - GET
+
+Read all of the reviews for a certain game given the gameId.
+
 endpoint: /moist-air/reviews/
 query parameters: gameId
 request: No body necessary
@@ -115,9 +120,12 @@ response:
     
    ... 
 ] 
-  Error: Error
+  Error: Error will be displayed here.
   
 - UPDATE - PATCH
+
+Update the review by specifying the gameId, userId, key that is to be changed, and the value that is to be changed along with the reviewID. 
+
 endpoint: /moist-air/reviews/
 query parameters: 
   gameId
@@ -131,6 +139,9 @@ response:
   JSON object of updated review
   
 - DELETE - DELETE
+
+Delete a review by specifying the gameId and the userId. 
+
 endpoint: /moist-air/reviews/
 query parameter: gameId
 body: 
