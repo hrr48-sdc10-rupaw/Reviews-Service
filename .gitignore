@@ -23,7 +23,9 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 client/dist/bundle.js
+client/dist/bundle.js.map
 
+database/.env
 npm
 .env
 .clocignore
