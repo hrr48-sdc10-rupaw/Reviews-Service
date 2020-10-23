@@ -27,6 +27,17 @@ app.get('/moist-air/reviews', (req, res) => {
   })
 })
 
+// app.get('/moist-air/reviews', (req, res) => {
+//   serverDbConnection.readAllOperation(req.query.gameID)
+//     .catch((err) => {
+//       if (err) console.error(err);
+//       res.send(err)
+//     .then((data) => {
+//       res.send(data);
+//     })
+//     })
+// })
+
 app.patch('/moist-air/reviews', (req, res) => {
   serverDbConnection.updateOperation(req.query, (err, result) => {
     if (err) {

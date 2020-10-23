@@ -11,7 +11,9 @@
     "faker": "^5.1.0",
     "fs": "0.0.1-security",
     "moment": "^2.29.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pg": "^8.4.1",
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.11.1",
@@ -33,7 +35,9 @@
     "installAll": "npm install && cd database && npm install && cd ../server && npm install && cd ../client && npm install",
     "initialize": "cd database && npm run database && npm run migrate && npm run seed",
     "start": "nodemon server/index.js",
-    "test": "cd tests && jest --detectOpenHandles"
+    "test": "cd tests && jest --detectOpenHandles",
+    "generateData": "node database/generate.js",
+    "seed": "psql database/seed.sql"
   },
   "repository": {
     "type": "git",

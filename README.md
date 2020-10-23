@@ -24,6 +24,8 @@ From within the root folder:
 - npm run initialize - Create Database and tables and seed with fake data.
 - npm run clearDB - Remove all data and delete database.
 - npm run build - run webpack to create a bundle.js file.
+- npm run generateData - generated CSV files for Postgres
+- npm run seed - seeds CSV files into Postgres database
 
 
 ## Requirements
@@ -44,9 +46,9 @@ From within the root directory:
 
 ```sh
 1. Find the .env files in your root folder and your database folder.
-1. Change the database username and password in these 2 files to reflect your setup.
-1. npm run installAll
-1. npm run initialize
+2. Change the database username and password in these 2 files to reflect your setup.
+3. npm run installAll
+4. npm run initialize
 ```
 
 ### API Endpoints (CRUD Operations)
@@ -54,7 +56,7 @@ From within the root directory:
 ```sh
 - CREATE - POST
 
-Create new reviews using a gameId, userId, body, and recommended value. 
+Create new reviews using a gameId, userId, body, and recommended value.
 
 endpoint: /moist-air/reviews/
 query parameters: gameId
@@ -64,11 +66,11 @@ request:
     body: {PLACE_BODY_HERE} (text)
     recommended: {PLACE_RECOMMENDED_HERE} (boolean)
     }
-response: 
+response:
   Success: 'Review has been posted'
-  Error: Error will be displayed here. 
+  Error: Error will be displayed here.
 
-    
+
 - READ - GET
 
 Read all of the reviews for a certain game given the gameId.
@@ -76,7 +78,7 @@ Read all of the reviews for a certain game given the gameId.
 endpoint: /moist-air/reviews/
 query parameters: gameId
 request: No body necessary
-response: 
+response:
   Success:
   [
     {
@@ -117,37 +119,41 @@ response:
             "id": 12099
         }
     },
-    
-   ... 
-] 
+
+   ...
+]
   Error: Error will be displayed here.
-  
+
 - UPDATE - PATCH
 
-Update the review by specifying the gameId, userId, key that is to be changed, and the value that is to be changed along with the reviewID. 
+Update the review by specifying the gameId, userId, key that is to be changed, and the value that is to be changed along with the reviewID.
 
 endpoint: /moist-air/reviews/
-query parameters: 
+query parameters:
   gameId
   key (key to be changed)
   value (value to be changed to)
   reviewID
-request: 
-  example: 
+request:
+  example:
   http://localhost:3003/moist-air/reviews/?gameId=99&key=funny&value=1&reviewID=123
-response: 
+response:
   JSON object of updated review
-  
+
 - DELETE - DELETE
 
-Delete a review by specifying the gameId and the userId. 
+Delete a review by specifying the gameId and the userId.
 
 endpoint: /moist-air/reviews/
 query parameter: gameId
-body: 
+body:
   {
     userId: "PLACE_USERID_HERE
   }
 response: Review was deleted
 ```
 
+### Seeding Database
+
+> Generate data first using generateData script. After data is generated, make a seed.sql file using seed.sql.example as reference. Insert the paths for generated CSVs in the seed.sql file.
+> Seed the database using seed script.

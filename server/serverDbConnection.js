@@ -29,6 +29,18 @@ const createOperation = (query, main, callback) => {
     })
 };
 
+// const readAllOperation = (gameId, callback) => {
+//   if (gameId === undefined) {
+//     gameId = 1;
+//   }
+//   db.getReviews(gameId, (err, result) => {
+//     if (err) {
+//       callback(err);
+//     } else {
+//       callback(null, result);
+//     }
+//   })
+// }
 const readAllOperation = (gameId, callback) => {
   if (gameId === undefined) {
     gameId = 1;
@@ -40,30 +52,32 @@ const readAllOperation = (gameId, callback) => {
     .then((data) => {
       callback(null, data);
     })
-};
+}
 
 const updateOperation = (query, callback) => {
   const dataToChange = {
     key: query.key,
     val: query.value
   };
-  db.updateReview(query.reviewID, dataToChange)
-    .catch((err) => {
+  db.updateReview(query.reviewID, dataToChange, (err, result) => {
+    if (err) {
       callback(err);
-    })
-    .then((data) => {
-      callback(null, data);
-    })
+    } else {
+      callback(null, result);
+    }
+  })
+
 }
 
 const deleteOperation = (gameId, userId, callback) => {
-  db.deleteReview(gameId, userId)
-    .catch((err) => {
-      callback(err)
-    })
-    .then((data) => {
-      callback(null, data)
-    })
+  db.deleteReview(gameId, userId, (err, result) => {
+    if (err) {
+      callback (err);
+    } else {
+      callback(null, result);
+    }
+  })
+
 }
 
 module.exports.createOperation = createOperation;
