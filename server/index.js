@@ -18,11 +18,13 @@ app.post('/moist-air/reviews', (req, res) => {
 });
 
 app.get('/moist-air/reviews', (req, res) => {
+  console.log('responding to a get request');
   serverDbConnection.readAllOperation(req.query.gameID, (err, result) => {
     if (err) {
       console.error(err);
       res.send(err);
     }
+    console.log(result);
     res.send(result)
   })
 })

@@ -1,26 +1,67 @@
-const Sequelize = require('sequelize');
-const dotenv = require('dotenv');
-const models = require('./models');
-dotenv.config();
+const { Pool } = require('pg');
 
-const sequelize = new Sequelize('reviews', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+const pool = new Pool({
   host: 'localhost',
-  dialect: 'mysql'
-});
+  user: 'chancenguyen',
+  password: '',
+  database: 'steam_reviews'
+})
 
-var getReviews = async (GameId) => {
-  const reviews = await models.Review.findAll({
-    include: [{
-      model: models.User,
-    }, {
-      model: models.Game,
-    }, {
-      model: models.User_game,
-    }],
-    where: { GameId },
-  });
-  return reviews;
-};
+
+
+var getReviews = (gameId, callback) => {
+  pool.connect((err, client, release) => {
+    if (err) {
+      callback(err.stack);
+    }
+    client.query(
+      `select
+      reviews.id,
+      reviews.gameid,
+      reviews.userid,
+      reviews.recommended,
+      reviews.body,
+      reviews.helpful_count,
+      reviews.funny_count,
+      reviews.awards,
+      reviews.reviewcreatedAt,
+      reviews.reviewupdatedAt,
+      json_build_object(
+         'id', users.id,
+         'Username', users.username,
+         'avatar', users.avatar,
+         'games_owned_count', users.games_owned_count,
+         'reviews_count', users.reviews_count,
+         'createdAt', users.userCreatedAt,
+         'updatedAt', users.userUpdatedAt
+      ) as "User",
+      json_build_object(
+        'id', games.id,
+        'Title', games.title,
+        'createdAt', games.gamecreatedAt,
+        'updatedAt', games.gameupdatedat
+      ) as "Game",
+      json_build_object(
+        'GameId', games.id,
+        'UserId', users.id,
+        'time_played', reviews.time_played,
+        'purchase_type', reviews.purchase_type
+      ) as "User_game"
+
+    from reviews
+    inner join users on (reviews.userid = users.id)
+    inner join games on (reviews.gameid = games.id)
+    where reviews.gameid = 1;`
+      , (err, result) => {
+      release()
+      if (err) {
+        callback(err.stack);
+      }
+      callback(null, result.rows);
+    })
+  })
+
+}
 
 const allowedAwards = {
   'Deep Thoughts': true,

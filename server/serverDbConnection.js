@@ -33,13 +33,12 @@ const readAllOperation = (gameId, callback) => {
   if (gameId === undefined) {
     gameId = 1;
   }
-  db.getReviews(gameId)
-    .catch((err) => {
-      callback(err);
-    })
-    .then((data) => {
-      callback(null, data);
-    })
+  db.getReviews(gameId, (err, result) => {
+    if (err) callback(err);
+    else {
+      callback(null, result);
+    }
+  })
 };
 
 const updateOperation = (query, callback) => {
