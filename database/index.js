@@ -51,7 +51,7 @@ var getReviews = (gameId, callback) => {
     from reviews
     inner join users on (reviews.userid = users.id)
     inner join games on (reviews.gameid = games.id)
-    where reviews.gameid = 1;`
+    where reviews.gameid = ${gameId};`
       , (err, result) => {
       release()
       if (err) {
@@ -95,20 +95,25 @@ var updateReview = async (id, dataToChange) => {
 };
 
 var createReview = async (reviewData, callback) => {
-  const review = await models.Review.create({
-    GameId: reviewData.gameId,
-    UserId: reviewData.userId,
-    UserGameId: reviewData.userGameId,
-    body: reviewData.body,
-    recommended: reviewData.recommended,
-    helpful_count: 0,
-    funny_count: 0,
-    comments_count: 0,
-    awards: "{\"Treasure\":0,\"Mind Blown\":0,\"Golden Unicorn\":0,\"Deep Thoughts\":0,\"Heartwarming\":0,\"Hilarious\":0,\"Hot Take\":0,\"Poetry\":0,\"Extra Helpful\":0}",
-    createdAt: reviewData.date,
-    updatedAt: reviewData.date
+  pool.connect((err, client, release) => {
+    var query = `
+    INSERT INTO REVIEWS
+      (recommended, body, helpful_count, funny_count, comments_count, awards, reviewcreatedAt, reviewupdatedAt, gameid, userid, time_played, purchase_type)
+      VALUES (${reviewData.recommended}, '${reviewData.body}', 0, 0, 0, '{''Treasure'':1,''Mind Blown'':0,''Golden Unicorn'':0,''Deep Thoughts'':0,''Heartwarming'':0,''Hilarious'':0,''Hot Take'':0,''Poetry'':0,''Extra Helpful'':0}', '${reviewData.date}', '${reviewData.date}', ${reviewData.gameId}, ${reviewData.userId}, ${reviewData.time_played}, '${reviewData.purchase_type}');
+    `;
+    if (err) {
+      callback(err.stack);
+    }
+    client.query(query, (err, result) => {
+        release()
+        if (err) {
+          callback(err.stack);
+        } else {
+          callback(null, result);
+        }
+      }
+    )
   })
-  return review;
 };
 
 var deleteReview = async (gameId, userId) => {

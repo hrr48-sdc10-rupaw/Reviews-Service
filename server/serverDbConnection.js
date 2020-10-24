@@ -8,25 +8,25 @@ const createOperation = (query, main, callback) => {
   let userId = main.userId;
   let body = main.body;
   let recommended = main.recommended;
-  var idString = '000' + gameId.toString();
-  idString = idString.slice(-3);
-  var userGameId = userId.toString() + idString;
   var date = moment().format();
+  let time_played = main.time_played;
+  let purchase_type = main.purchase_type === true ? 'Steam Purchase' : 'Non-Steam Purchase';
   var reviewData = {
     gameId,
     userId,
     body,
     recommended,
-    userGameId,
     date,
+    time_played,
+    purchase_type
   }
-  db.createReview(reviewData)
-    .catch((err) => {
+  db.createReview(reviewData, (err, result) => {
+    if (err) {
       callback(err);
-    })
-    .then((data) => {
-      callback(null, data);
-    })
+    } else {
+      callback(null, result);
+    }
+  })
 };
 
 const readAllOperation = (gameId, callback) => {
