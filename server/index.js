@@ -24,7 +24,6 @@ app.get('/moist-air/reviews', (req, res) => {
       console.error(err);
       res.send(err);
     }
-    console.log(result);
     res.send(result)
   })
 })
