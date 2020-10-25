@@ -1,9 +1,11 @@
 const { Pool } = require('pg');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const pool = new Pool({
-  host: 'localhost',
-  user: 'chancenguyen',
-  password: '',
+  host: process.env.HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   database: 'steam_reviews'
 })
 
