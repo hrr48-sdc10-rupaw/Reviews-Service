@@ -26,9 +26,15 @@ client/dist/bundle.js
 client/dist/bundle.js.map
 
 database/.env
+database/generated
 npm
 .env
 .clocignore
 .eslintrc.js
 .vscode
 .nvmrc
+games.csv
+reviews.csv
+userGames.csv
+users.csv
+seed.sql

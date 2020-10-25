@@ -1,0 +1,68 @@
+
+DROP DATABASE IF EXISTS steam_reviews;
+
+CREATE DATABASE steam_reviews;
+
+\c steam_reviews
+
+CREATE TABLE games(
+  id integer primary key,
+  Title varchar(255),
+  gameCreatedAt TIMESTAMP,
+  gameUpdatedAt TIMESTAMP
+);
+
+CREATE TABLE users(
+  id integer primary key,
+  userCreatedAt TIMESTAMP,
+  userUpdatedAt TIMESTAMP,
+  Username varchar(100),
+  avatar varchar(255),
+  games_owned_count integer,
+  reviews_count integer
+);
+
+
+CREATE TABLE reviews(
+  id integer primary key,
+  recommended boolean,
+  body varchar(1000),
+  helpful_count integer,
+  funny_count integer,
+  comments_count integer,
+  awards varchar(255),
+  reviewCreatedAt TIMESTAMP,
+  reviewUpdatedAt TIMESTAMP,
+  GameId integer,
+  UserId integer,
+  time_played integer,
+  purchase_type varchar(100)
+);
+
+COPY games
+FROM {INSERT_PATH_TO_GAMES_CSV}
+DELIMITER ','
+CSV HEADER;
+
+COPY users
+FROM {INSERT_PATH_TO_USERS_CSV}
+DELIMITER ','
+CSV HEADER;
+
+COPY reviews
+FROM {INSERT_PATH_TO_REVIEWS_CSV}
+DELIMITER ','
+CSV HEADER;
+
+ALTER TABLE reviews
+ADD CONSTRAINT games_fk
+FOREIGN KEY (GameId)
+REFERENCES games(id);
+
+ALTER TABLE reviews
+ADD CONSTRAINT users_fk
+FOREIGN KEY (userId)
+REFERENCES users(id);
+
+CREATE INDEX gameid_idx
+on reviews (gameid);
