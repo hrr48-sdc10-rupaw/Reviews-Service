@@ -50,7 +50,6 @@ var getReviews = (gameId, callback) => {
         'time_played', reviews.time_played,
         'purchase_type', reviews.purchase_type
       ) as "User_game"
-
     from reviews
     inner join users on (reviews.userid = users.id)
     inner join games on (reviews.gameid = games.id)
@@ -63,9 +62,7 @@ var getReviews = (gameId, callback) => {
       callback(null, result.rows);
     })
   })
-
 }
-
 const allowedAwards = {
   'Deep Thoughts': true,
   'Extra Helpful': true,
@@ -77,7 +74,6 @@ const allowedAwards = {
   'Poetry': true,
   'Treasure': true
 };
-
 var updateReview = async (id, dataToChange) => {
   const review = await models.Review.findOne({ where: { id } });
   if (dataToChange.key === 'awards') {
@@ -96,7 +92,6 @@ var updateReview = async (id, dataToChange) => {
   review.save();
   return review;
 };
-
 var createReview = async (reviewData, callback) => {
   pool.connect((err, client, release) => {
     var query = `
@@ -113,42 +108,11 @@ var createReview = async (reviewData, callback) => {
           callback(err.stack);
         } else {
           callback(null, result);
-=======
-const moment = require('moment');
-
-const pool = new Pool({
-  user: 'chancenguyen',
-  password: '',
-  database: 'steam_reviews_test',
-  host: 'localhost',
-});
-
-function getReviews (gameId, callback) {
-  var response
-  pool.connect((err, client, release) => {
-    if (err) {
-      return console.error('Error acquiring client', err.stack)
-    }
-    client.query(
-      `SELECT *
-      FROM reviews
-      INNER JOIN user_games ON (reviews.usergameid = user_games.id)
-      INNER JOIN users ON (user_games.userid = users.id)
-      INNER JOIN games ON (user_games.userid = games.id)
-      where games.id = ${gameId};` , (err, result) => {
-        release()
-        if (err) {
-          callback(err);
-        } else {
-          callback(null, result.rows);
-
         }
       }
     )
   })
-
 };
-
 var deleteReview = async (gameId, userId) => {
   const review = await models.Review.findOne({
     where: {
@@ -158,8 +122,8 @@ var deleteReview = async (gameId, userId) => {
   });
   review.destroy();
   return;
-
-
 }
-
 module.exports.getReviews = getReviews;
+module.exports.updateReview = updateReview;
+module.exports.createReview = createReview;
+module.exports.deleteReview = deleteReview;
