@@ -1,5 +1,6 @@
 const express = require('express');
 const serverDbConnection = require('./serverDbConnection.js');
+require('newrelic');
 
 const app = express();
 const PORT = process.env.PORT || 3003;
@@ -18,7 +19,6 @@ app.post('/moist-air/reviews', (req, res) => {
 });
 
 app.get('/moist-air/reviews', (req, res) => {
-  console.log('responding to a get request');
   serverDbConnection.readAllOperation(req.query.gameID, (err, result) => {
     if (err) {
       console.error(err);

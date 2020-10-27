@@ -59,6 +59,7 @@ var getReviews = (gameId, callback) => {
       if (err) {
         callback(err.stack);
       }
+      console.log(result);
       callback(null, result.rows);
     })
   })
@@ -97,7 +98,7 @@ var createReview = async (reviewData, callback) => {
     var query = `
     INSERT INTO REVIEWS
       (recommended, body, helpful_count, funny_count, comments_count, awards, reviewcreatedAt, reviewupdatedAt, gameid, userid, time_played, purchase_type)
-      VALUES (${reviewData.recommended}, '${reviewData.body}', 0, 0, 0, '{''Treasure'':1,''Mind Blown'':0,''Golden Unicorn'':0,''Deep Thoughts'':0,''Heartwarming'':0,''Hilarious'':0,''Hot Take'':0,''Poetry'':0,''Extra Helpful'':0}', '${reviewData.date}', '${reviewData.date}', ${reviewData.gameId}, ${reviewData.userId}, ${reviewData.time_played}, '${reviewData.purchase_type}');
+      VALUES (${reviewData.recommended}, '${reviewData.body}', 0, 0, 0, '{"Treasure":1,"Mind Blown":0,"Golden Unicorn":0,"Deep Thoughts":0,"Heartwarming":0,"Hilarious":0,"Hot Take":0,"Poetry":0,"Extra Helpful":0}', '${reviewData.date}', '${reviewData.date}', ${reviewData.gameId}, ${reviewData.userId}, ${reviewData.time_played}, '${reviewData.purchase_type}');
     `;
     if (err) {
       callback(err.stack);
