@@ -59,7 +59,6 @@ var getReviews = (gameId, callback) => {
       if (err) {
         callback(err.stack);
       }
-      console.log(result);
       callback(null, result.rows);
     })
   })

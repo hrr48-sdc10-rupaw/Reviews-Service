@@ -14,7 +14,9 @@
     "newrelic": "^6.13.2",
     "nodemon": "^2.0.4",
     "pg": "^8.4.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "timer-node": "^3.0.0",
+    "timer.js": "^1.0.4"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.11.1",
