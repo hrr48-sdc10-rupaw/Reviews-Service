@@ -40,7 +40,8 @@
     "start": "nodemon server/index.js",
     "test": "cd tests && jest --detectOpenHandles",
     "generateData": "node database/generate.js",
-    "seed": "psql database/seed.sql"
+    "seed": "psql database/seed.sql",
+    "stress": "k6 run k6script.js"
   },
   "repository": {
     "type": "git",
