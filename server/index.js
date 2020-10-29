@@ -1,9 +1,11 @@
 const express = require('express');
+const Timer = require('timer-node');
 const serverDbConnection = require('./serverDbConnection.js');
 require('newrelic');
 
 const app = express();
 const PORT = process.env.PORT || 3003;
+const timer = new Timer('test-timer');
 
 app.use('/', express.static('client/dist'));
 app.use(express.json());
@@ -19,11 +21,14 @@ app.post('/moist-air/reviews', (req, res) => {
 });
 
 app.get('/moist-air/reviews', (req, res) => {
+  timer.start();
   serverDbConnection.readAllOperation(req.query.gameID, (err, result) => {
     if (err) {
       console.error(err);
       res.send(err);
     }
+    timer.stop();
+    console.log(timer.format());
     res.send(result)
   })
 })
